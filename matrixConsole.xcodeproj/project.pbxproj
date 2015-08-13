@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		324D3BF61B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324D3BF51B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework */; };
+		324D3BF71B7CC74000AF3FB2 /* MatrixEndpointWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324D3BF51B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework */; };
+		324D3BF81B7CC74000AF3FB2 /* MatrixEndpointWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 324D3BF51B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		32F90B7B1B28906400DDC61B /* empty.mm in Sources */ = {isa = PBXBuildFile; fileRef = 32F90B7A1B28906400DDC61B /* empty.mm */; };
 		71193D241A6D64F900E59A9E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71193D231A6D64F900E59A9E /* AddressBook.framework */; };
 		71193D291A6E3DC000E59A9E /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71193D281A6E3DC000E59A9E /* ContactsViewController.m */; };
@@ -55,8 +58,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		324D3BF91B7CC74100AF3FB2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				324D3BF81B7CC74000AF3FB2 /* MatrixEndpointWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		13057A57E74FD5504196F47F /* Pods-matrixConsole.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matrixConsole.release.xcconfig"; path = "Pods/Target Support Files/Pods-matrixConsole/Pods-matrixConsole.release.xcconfig"; sourceTree = "<group>"; };
+		324D3BF51B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MatrixEndpointWrapper.framework; path = Pods/MatrixEndpointWrapper/MatrixEndpointWrapper.framework; sourceTree = "<group>"; };
 		32F90B7A1B28906400DDC61B /* empty.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = empty.mm; sourceTree = "<group>"; };
 		71193D231A6D64F900E59A9E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		71193D271A6E3DC000E59A9E /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
@@ -117,7 +135,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				324D3BF61B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework in Frameworks */,
 				F0F148A81AB1BF01005F5D4A /* AudioToolbox.framework in Frameworks */,
+				324D3BF71B7CC74000AF3FB2 /* MatrixEndpointWrapper.framework in Frameworks */,
 				71193D241A6D64F900E59A9E /* AddressBook.framework in Frameworks */,
 				F08DCBDB1A093BFA008C65B6 /* MobileCoreServices.framework in Frameworks */,
 				D648B86A591308736E2D4078 /* libPods-matrixConsole.a in Frameworks */,
@@ -154,6 +174,7 @@
 		EAA71E3C2B16D1D86B3F5100 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				324D3BF51B7CC73600AF3FB2 /* MatrixEndpointWrapper.framework */,
 				F0F148A71AB1BF01005F5D4A /* AudioToolbox.framework */,
 				71193D231A6D64F900E59A9E /* AddressBook.framework */,
 				F08DCBDA1A093BFA008C65B6 /* MobileCoreServices.framework */,
@@ -310,6 +331,7 @@
 				F07A80CF19DD9DE700B621A1 /* Frameworks */,
 				F07A80D019DD9DE700B621A1 /* Resources */,
 				3496B335A95D95AB2A8DCEF4 /* Copy Pods Resources */,
+				324D3BF91B7CC74100AF3FB2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -612,6 +634,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/MatrixEndpointWrapper",
+				);
 				INFOPLIST_FILE = matrixConsole/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -626,6 +652,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/MatrixEndpointWrapper",
+				);
 				INFOPLIST_FILE = matrixConsole/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
