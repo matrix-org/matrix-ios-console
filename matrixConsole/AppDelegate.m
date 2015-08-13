@@ -26,11 +26,12 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
-#define MX_CALL_STACK_OPENWEBRTC
+//#define MX_CALL_STACK_OPENWEBRTC
 #ifdef MX_CALL_STACK_OPENWEBRTC
 #import <MatrixOpenWebRTCWrapper/MatrixOpenWebRTCWrapper.h>
 #endif
 
+#define MX_CALL_STACK_ENDPOINT
 #ifdef MX_CALL_STACK_ENDPOINT
 #import <MatrixEndpointWrapper/MatrixEndpointWrapper.h>
 #endif

@@ -2,6 +2,7 @@
 # platform :ios, "6.0"
 
 source 'https://github.com/CocoaPods/Specs.git'
+source 'ssh://git@git.openmarket.com/tng/Specs.git'
 
 target "matrixConsole" do
 
@@ -29,6 +30,8 @@ pod 'GBDeviceInfo', '~> 2.2.9'
 # The wrapper lib between MatrixSDK and OpenWebRTC-SDK
 pod 'MatrixOpenWebRTCWrapper', :git => 'https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git', :branch => 'master'
 pod 'OpenWebRTC-SDK', :git => 'https://github.com/matrix-org/openwebrtc-ios-sdk.git', :branch => 'cvo_support'
+
+pod 'MatrixEndpointWrapper'
 
 end
 
