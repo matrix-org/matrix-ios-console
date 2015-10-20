@@ -220,11 +220,26 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         // Add matrix observers and initialize matrix sessions.
-        [self initMatrixSessions];
+        [self initMatrixSessions];        
     }
     
     // clear the notifications counter
     [self clearNotifications];
+    
+    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    // if the application has been launched by the push
+    // the user should not been as online.
+    if (remoteNotif && ([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground))
+    {
+        // Suspend all running matrix sessions
+        NSArray *mxAccounts = [MXKAccountManager sharedManager].activeAccounts;
+        
+        for (MXKAccount *account in mxAccounts)
+        {
+            account.sendPresenceAfterInit = NO;
+        }
+    }
     
     return YES;
 }
