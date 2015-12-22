@@ -177,6 +177,9 @@
     // Override point for customization after application launch.
     if ([self.window.rootViewController isKindOfClass:[MasterTabBarController class]])
     {
+        // Customize the localized string table
+        [NSBundle mxk_customizeLocalizedStringTableName:@"MatrixConsole"];
+        
         self.masterTabBarController = (MasterTabBarController*)self.window.rootViewController;
         self.masterTabBarController.delegate = self;
         
