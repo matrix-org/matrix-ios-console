@@ -476,7 +476,8 @@
                 
                 NSLog(@"[AppDelegate] : starts a background sync");
 
-                [dedicatedAccount catchup:20000 success:^{
+                [dedicatedAccount backgroundSync:20000 success:^{
+                    
                     NSLog(@"[AppDelegate] : the background sync succeeds");
                     
                     if (_completionHandler)
@@ -484,7 +485,9 @@
                         _completionHandler(UIBackgroundFetchResultNewData);
                         _completionHandler = nil;
                     }
+                    
                 } failure:^(NSError *error) {
+                    
                     NSLog(@"[AppDelegate] : the background sync fails");
 
 
@@ -493,6 +496,7 @@
                         _completionHandler(UIBackgroundFetchResultNoData);
                         _completionHandler = nil;
                     }
+                    
                 }];
 
                 // wait that the background sync is done
