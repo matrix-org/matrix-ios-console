@@ -256,6 +256,11 @@
     if (recentsViewController)
     {
         [recentsNavigationController popToViewController:recentsViewController animated:animated];
+        // For unknown reason, the navigation bar is not restored correctly by [popToViewController:animated:]
+        // when a ViewController has hidden it (see MXKAttachmentsViewController).
+        // Patch: restore navigation bar by default here.
+        recentsNavigationController.navigationBarHidden = NO;
+        
         // Release the current selected room
         [recentsViewController closeSelectedRoom];
     }
