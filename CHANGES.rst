@@ -1,3 +1,14 @@
+Changes in Console in 0.6.0 (2016-01-22)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.0).
+ * AppDelegate: Customize the localized string table.
+ * RoomViewController: Display member details in case of long press on avatar.
+
+Bug fixes:
+ * lock/unlock whilst viewing photos => no navigation bar.
+
 Changes in Console in 0.5.7 (2015-11-30)
 ===============================================
 
