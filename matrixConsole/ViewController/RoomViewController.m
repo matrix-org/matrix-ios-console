@@ -276,8 +276,8 @@
 
 - (void)dataSource:(MXKDataSource *)dataSource didRecognizeAction:(NSString *)actionIdentifier inCell:(id<MXKCellRendering>)cell userInfo:(NSDictionary *)userInfo
 {
-    // Override default implementation in case of tap on avatar
-    if ([actionIdentifier isEqualToString:kMXKRoomBubbleCellTapOnAvatarView])
+    // Override default implementation in case of long press on avatar
+    if ([actionIdentifier isEqualToString:kMXKRoomBubbleCellLongPressOnAvatarView])
     {
         selectedRoomMember = [self.roomDataSource.room.state memberWithUserId:userInfo[kMXKRoomBubbleCellUserIdKey]];
         if (selectedRoomMember)
