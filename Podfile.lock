@@ -29,12 +29,52 @@ PODS:
     - HPGrowingTextView (~> 1.1)
     - libPhoneNumber-iOS (~> 0.8.7)
     - MatrixSDK (~> 0.6.1)
+  - MatrixOpenWebRTCWrapper (0.0.2):
+    - MatrixSDK
+    - OpenWebRTC-SDK
   - MatrixSDK (0.6.1):
     - AFNetworking (~> 2.6.0)
+  - OpenWebRTC (0.3.1)
+  - OpenWebRTC-SDK (0.1.1):
+    - OpenWebRTC
 
 DEPENDENCIES:
   - GBDeviceInfo (~> 3.4.0)
-  - MatrixKit (~> 0.3.1)
+  - MatrixKit (from `https://github.com/matrix-org/matrix-ios-kit.git`, branch `develop`)
+  - MatrixOpenWebRTCWrapper (from `https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git`,
+    branch `master`)
+  - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
+  - OpenWebRTC (= 0.3.1)
+  - OpenWebRTC-SDK (from `https://github.com/matrix-org/openwebrtc-ios-sdk.git`, branch
+    `cvo_support`)
+
+EXTERNAL SOURCES:
+  MatrixKit:
+    :branch: develop
+    :git: https://github.com/matrix-org/matrix-ios-kit.git
+  MatrixOpenWebRTCWrapper:
+    :branch: master
+    :git: https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git
+  MatrixSDK:
+    :branch: develop
+    :git: https://github.com/matrix-org/matrix-ios-sdk.git
+  OpenWebRTC-SDK:
+    :branch: cvo_support
+    :git: https://github.com/matrix-org/openwebrtc-ios-sdk.git
+
+CHECKOUT OPTIONS:
+  MatrixKit:
+    :commit: 6f311f607692fc20ecf40ba19d49549ad91db0fa
+    :git: https://github.com/matrix-org/matrix-ios-kit.git
+  MatrixOpenWebRTCWrapper:
+    :commit: cfe1429ac809a63dc2c1dd11da70c7e27be52f03
+    :git: https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git
+  MatrixSDK:
+    :commit: 1b9f82470782cf32ad75b0ca11c5b5f5de4f5368
+    :git: https://github.com/matrix-org/matrix-ios-sdk.git
+  OpenWebRTC-SDK:
+    :commit: eb8ce71475cdd1c2879279daff48be6264237fca
+    :git: https://github.com/matrix-org/openwebrtc-ios-sdk.git
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -43,6 +83,9 @@ SPEC CHECKSUMS:
   HPGrowingTextView: 88a716d97fb853bcb08a4a08e4727da17efc9b19
   libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
   MatrixKit: bc840b9c79ccf9d48156f8b5689f19e4943b4db3
+  MatrixOpenWebRTCWrapper: c56ed570f9151853576c14f71cea7c7c57255830
   MatrixSDK: 4e3390f72b671c4041356bbdbfcad46d67a41d76
+  OpenWebRTC: 85be1caf6dc45b11106eacba93de61e3e52b1cf8
+  OpenWebRTC-SDK: fd66e49ab80e88ed1e55231ac875a4976dc3ba74
 
 COCOAPODS: 0.39.0
