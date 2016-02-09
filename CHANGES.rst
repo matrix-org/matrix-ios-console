@@ -1,3 +1,9 @@
+Changes in Console in 0.6.2 (2016-02-09)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.2).
+
 Changes in Console in 0.6.1 (2016-01-29)
 ===============================================
 
