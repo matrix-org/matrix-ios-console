@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GsA-m1-kGB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GsA-m1-kGB">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--RecentsNav-->
@@ -27,7 +27,7 @@
                     <navigationItem key="navigationItem" id="3Zt-Wl-J6o">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="aas-th-FW1" userLabel="Room title view container">
-                            <rect key="frame" x="60" y="2" width="480" height="40"/>
+                            <rect key="frame" x="58" y="2" width="480" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -42,7 +42,7 @@
                     <connections>
                         <outlet property="roomTitleViewContainer" destination="aas-th-FW1" id="SFz-1s-ywg"/>
                         <outlet property="showRoomMembersButtonItem" destination="3d6-ln-ICU" id="Qh7-yj-G7e"/>
-                        <segue destination="qlN-Mb-ZH7" kind="show" identifier="showMemberDetails" id="9Sj-Yf-p2I"/>
+                        <segue destination="uGn-ZH-LiG" kind="show" identifier="showMemberDetails" id="hIF-HG-0WJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94y-cU-qQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -71,7 +71,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="qlN-Mb-ZH7" kind="show" identifier="showDetails" id="m9P-N3-WZN"/>
+                        <segue destination="uGn-ZH-LiG" kind="show" identifier="showDetails" id="2xr-3m-zPz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Exe-4N-jYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -79,12 +79,12 @@
             <point key="canvasLocation" x="2895" y="-290"/>
         </scene>
         <!--Room Member Details View Controller-->
-        <scene sceneID="q1J-Wz-aLa">
+        <scene sceneID="bWE-ZI-efJ">
             <objects>
-                <tableViewController id="qlN-Mb-ZH7" customClass="MXKRoomMemberDetailsViewController" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mrY-z4-HGF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="uGn-ZH-LiG" customClass="MXKRoomMemberDetailsViewController" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wml-7Z-aj2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2895" y="488"/>
+            <point key="canvasLocation" x="2895" y="466"/>
         </scene>
         <!--Home-->
         <scene sceneID="ZM8-lp-XE5">
@@ -340,7 +340,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vo4-8x-dtH"/>
-        <segue reference="9Sj-Yf-p2I"/>
+        <segue reference="hIF-HG-0WJ"/>
         <segue reference="17E-G9-IZ6"/>
     </inferredMetricsTieBreakers>
 </document>
