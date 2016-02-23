@@ -85,7 +85,7 @@
     {
         if (membersListener)
         {
-            [self.roomDataSource.room removeListener:membersListener];
+            [self.roomDataSource.room.liveTimeline removeListener:membersListener];
             membersListener = nil;
         }
     }
@@ -132,7 +132,7 @@
     // Remove members listener (if any) before changing dataSource.
     if (membersListener)
     {
-        [self.roomDataSource.room removeListener:membersListener];
+        [self.roomDataSource.room.liveTimeline removeListener:membersListener];
         membersListener = nil;
     }
     
@@ -149,7 +149,7 @@
         // Register a listener for events that concern room members
         if (!membersListener)
         {
-            membersListener = [self.roomDataSource.room listenToEventsOfTypes:@[kMXEventTypeStringRoomMember] onEvent:^(MXEvent *event, MXEventDirection direction, id customObject) {
+            membersListener = [self.roomDataSource.room.liveTimeline listenToEventsOfTypes:@[kMXEventTypeStringRoomMember] onEvent:^(MXEvent *event, MXEventDirection direction, id customObject) {
                 
                 // Consider only live event
                 if (direction == MXEventDirectionForwards)
@@ -165,7 +165,7 @@
         // Remove members listener if any.
         if (membersListener)
         {
-            [self.roomDataSource.room removeListener:membersListener];
+            [self.roomDataSource.room.liveTimeline removeListener:membersListener];
             membersListener = nil;
         }
     }
@@ -213,7 +213,7 @@
 {
     if (membersListener)
     {
-        [self.roomDataSource.room removeListener:membersListener];
+        [self.roomDataSource.room.liveTimeline removeListener:membersListener];
         membersListener = nil;
     }
     
