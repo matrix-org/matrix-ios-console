@@ -149,10 +149,10 @@
         // Register a listener for events that concern room members
         if (!membersListener)
         {
-            membersListener = [self.roomDataSource.room.liveTimeline listenToEventsOfTypes:@[kMXEventTypeStringRoomMember] onEvent:^(MXEvent *event, MXEventDirection direction, id customObject) {
+            membersListener = [self.roomDataSource.room.liveTimeline listenToEventsOfTypes:@[kMXEventTypeStringRoomMember] onEvent:^(MXEvent *event, MXTimelineDirection direction, id customObject) {
                 
                 // Consider only live event
-                if (direction == MXEventDirectionForwards)
+                if (direction == MXTimelineDirectionForwards)
                 {
                     // Update navigation bar items
                     [self updateNavigationBarButtonItems];
