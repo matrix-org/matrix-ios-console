@@ -54,6 +54,7 @@
     
     // Replace the default input toolbar view with the one based on `HPGrowingTextView`.
     [self setRoomInputToolbarViewClass:MXKRoomInputToolbarViewWithHPGrowingText.class];
+    self.inputToolbarView.enableAutoSaving = YES;
     
     // Set rageShake handler
     self.rageShakeManager = [RageShakeManager sharedManager];
