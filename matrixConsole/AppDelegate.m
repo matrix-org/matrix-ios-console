@@ -236,13 +236,6 @@
         // do something when the app is launched on background
         NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: the application is launched in background");
     }
-    else
-    {
-        NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: clear the notifications");
-
-        // clear the notifications counter
-        [self clearNotifications];
-    }
     
     return YES;
 }
@@ -302,8 +295,8 @@
         [account pauseInBackgroundTask];
     }
     
-    // clear the notifications counter
-    [self clearNotifications];
+    // Refresh the notifications counter
+    [self refreshApplicationIconBadgeNumber];
     
     _isAppForeground = NO;
 }
@@ -311,10 +304,6 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     NSLog(@"[AppDelegate] applicationWillEnterForeground");
-
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    // clear the notifications counter
-    [self clearNotifications];
 
     // cancel any background sync before resuming
     // i.e. warn IOS that there is no new data with any received push.
@@ -800,17 +789,11 @@
     return self.errorNotification;
 }
 
-- (void)clearNotifications
+- (void)refreshApplicationIconBadgeNumber
 {
-    NSLog(@"[AppDelegate] clearNotifications");
-
-    // force to clear the notification center
-    // switching from 0 -> 1 -> 0 seems forcing the notifications center to refresh
-    // so resetting it does not clear the notifications center.
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    NSLog(@"[AppDelegate] refreshApplicationIconBadgeNumber");
     
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [MXKRoomDataSourceManager notificationCount];
 }
 
 - (void)enableInAppNotificationsForAccount:(MXKAccount*)account
