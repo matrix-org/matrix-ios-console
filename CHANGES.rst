@@ -1,3 +1,12 @@
+Changes in Console in 0.6.3 (2016-03-07)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.3).
+
+Bug fixes:
+ * SYIOS-202: IOS should no longer reset badge count on launch.
+
 Changes in Console in 0.6.2 (2016-02-09)
 ===============================================
 
