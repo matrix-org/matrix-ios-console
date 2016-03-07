@@ -24,68 +24,25 @@ PODS:
     - GBJailbreakDetection (~> 1.0)
   - GBJailbreakDetection (1.3.0)
   - HPGrowingTextView (1.1)
-  - libPhoneNumber-iOS (0.8.10)
-  - MatrixKit (0.3.2):
+  - libPhoneNumber-iOS (0.8.11)
+  - MatrixKit (0.3.3):
     - HPGrowingTextView (~> 1.1)
     - libPhoneNumber-iOS (~> 0.8.7)
-    - MatrixSDK (~> 0.6.2)
-  - MatrixOpenWebRTCWrapper (0.0.2):
-    - MatrixSDK
-    - OpenWebRTC-SDK
-  - MatrixSDK (0.6.2):
+    - MatrixSDK (~> 0.6.3)
+  - MatrixSDK (0.6.3):
     - AFNetworking (~> 2.6.0)
-  - OpenWebRTC (0.3.1)
-  - OpenWebRTC-SDK (0.1.1):
-    - OpenWebRTC
 
 DEPENDENCIES:
   - GBDeviceInfo (~> 3.4.0)
-  - MatrixKit (from `https://github.com/matrix-org/matrix-ios-kit.git`, branch `develop`)
-  - MatrixOpenWebRTCWrapper (from `https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git`,
-    branch `master`)
-  - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - OpenWebRTC (= 0.3.1)
-  - OpenWebRTC-SDK (from `https://github.com/matrix-org/openwebrtc-ios-sdk.git`, branch
-    `cvo_support`)
-
-EXTERNAL SOURCES:
-  MatrixKit:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-kit.git
-  MatrixOpenWebRTCWrapper:
-    :branch: master
-    :git: https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git
-  MatrixSDK:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-  OpenWebRTC-SDK:
-    :branch: cvo_support
-    :git: https://github.com/matrix-org/openwebrtc-ios-sdk.git
-
-CHECKOUT OPTIONS:
-  MatrixKit:
-    :commit: 998336d882c4cc1f1054fce3bc80e641d3c087e3
-    :git: https://github.com/matrix-org/matrix-ios-kit.git
-  MatrixOpenWebRTCWrapper:
-    :commit: cfe1429ac809a63dc2c1dd11da70c7e27be52f03
-    :git: https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git
-  MatrixSDK:
-    :commit: 4334a8d6b5b146a842ed444ffec090e4b8054a80
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-  OpenWebRTC-SDK:
-    :commit: eb8ce71475cdd1c2879279daff48be6264237fca
-    :git: https://github.com/matrix-org/openwebrtc-ios-sdk.git
+  - MatrixKit (~> 0.3.3)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   GBDeviceInfo: bab0f43d351b6f641a626cd7d21492abef1afe46
   GBJailbreakDetection: a216773574b62dddb6c876ffdb52c54ac05e27e0
   HPGrowingTextView: 88a716d97fb853bcb08a4a08e4727da17efc9b19
-  libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
-  MatrixKit: 058c677714d30b2ee13b8b777b3f3d069ec1de60
-  MatrixOpenWebRTCWrapper: c56ed570f9151853576c14f71cea7c7c57255830
-  MatrixSDK: 23ddb4af674e86def2a706fadaf44558c360e8dd
-  OpenWebRTC: 85be1caf6dc45b11106eacba93de61e3e52b1cf8
-  OpenWebRTC-SDK: fd66e49ab80e88ed1e55231ac875a4976dc3ba74
+  libPhoneNumber-iOS: ded33fab2c51ee847979556aa504c9e70f32d703
+  MatrixKit: 641a7c52257f047d5fca3aa02d145bd22f14f78c
+  MatrixSDK: 11cc53fa83a4f120d1de1f05e64b1fab63cf444b
 
 COCOAPODS: 0.39.0
