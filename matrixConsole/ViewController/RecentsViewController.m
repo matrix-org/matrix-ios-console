@@ -92,7 +92,6 @@
 - (void)destroy
 {
     if (markAllAsReadAlert)
-        
     {
         [markAllAsReadAlert dismiss:NO];
         markAllAsReadAlert = nil;
@@ -222,13 +221,7 @@
 
 - (void)updateNavigationBarTitle
 {
-    NSString *title = NSLocalizedStringFromTable(@"recents", @"MatrixConsole", nil);
-    
-    if (self.dataSource.unreadCount)
-    {
-        title = [NSString stringWithFormat:@"%@ (%tu)", title, self.dataSource.unreadCount];
-    }
-    self.navigationItem.title = title;
+    self.navigationItem.title = NSLocalizedStringFromTable(@"recents", @"MatrixConsole", nil);
 }
 
 - (void)createNewRoom:(id)sender
@@ -289,8 +282,7 @@
 
 - (void)onNavigationBarTap:(id)sender
 {
-    if (self.dataSource.unreadCount)
-        
+    if (self.dataSource.hasUnread)
     {
         __weak typeof(self) weakSelf = self;
         
