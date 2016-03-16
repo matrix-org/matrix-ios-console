@@ -174,6 +174,16 @@
 {
     NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: %@", launchOptions);
 
+    UIMutableApplicationShortcutItem *homeItem = [[UIMutableApplicationShortcutItem alloc] initWithType:@"com.da.matrixConsole.home" localizedTitle:@"Home"];
+    [homeItem setIcon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"tab_home.ico"]];
+    UIMutableApplicationShortcutItem *recentItem = [[UIMutableApplicationShortcutItem alloc] initWithType:@"com.da.matrixConsole.recents" localizedTitle:@"Recents"];
+     [recentItem setIcon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"tab_recents"]];
+    UIMutableApplicationShortcutItem *contactsItem = [[UIMutableApplicationShortcutItem alloc] initWithType:@"com.da.matrixConsole.contacts" localizedTitle:@"Contacts"];
+    [contactsItem setIcon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"contacts_filled_44"]];
+    UIMutableApplicationShortcutItem *settingItem = [[UIMutableApplicationShortcutItem alloc] initWithType:@"com.da.matrixConsole.settings" localizedTitle:@"Settings"];
+    [settingItem setIcon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"tab_settings"]];
+    [application setShortcutItems:@[homeItem,recentItem,contactsItem,settingItem]];
+    
     // Override point for customization after application launch.
     if ([self.window.rootViewController isKindOfClass:[MasterTabBarController class]])
     {
@@ -361,6 +371,27 @@
     NSLog(@"[AppDelegate] applicationWillTerminate");
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Handling force touch shortcuts
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    
+    UITabBarController *tabBarVC = [storyboard instantiateViewControllerWithIdentifier:@"MasterTabBarController"];
+    
+    if ([shortcutItem.type containsString:@"home"])
+        tabBarVC.selectedIndex = 0;
+    else if ([shortcutItem.type containsString:@"recents"])
+        tabBarVC.selectedIndex = 1;
+    else if ([shortcutItem.type containsString:@"contacts"])
+        tabBarVC.selectedIndex = 2;
+    else if ([shortcutItem.type containsString:@"settings"])
+        tabBarVC.selectedIndex = 3;
+    
+    self.window.rootViewController = tabBarVC;
+}
+
 
 #pragma mark - APNS methods
 
