@@ -633,6 +633,9 @@
         MXKAccount *account = notif.object;
         if (account)
         {
+            // Set the push gateway URL.
+            account.pushGatewayURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"pushGatewayURL"];
+            
             if (isAPNSRegistered)
             {
                 // Enable push notifications by default on new added account
@@ -679,6 +682,17 @@
     NSArray *mxAccounts = accountManager.accounts;
     if (mxAccounts.count)
     {
+        // The push gateway url is now configurable
+        // Set this url in the existing accounts when it is undefined.
+        for (MXKAccount *account in mxAccounts)
+        {
+            if (!account.pushGatewayURL)
+            {
+                // Set the push gateway URL.
+                account.pushGatewayURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"pushGatewayURL"];
+            }
+        }
+        
         // Set up push notifications
         [self registerUserNotificationSettings];
         
