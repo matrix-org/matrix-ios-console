@@ -959,6 +959,11 @@
         {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             strongSelf->accountPicker = nil;
+            
+            if (onSelection)
+            {
+                onSelection(nil);
+            }
         }];
         
         accountPicker.sourceView = [self.masterTabBarController selectedViewController].view;
@@ -968,11 +973,11 @@
 
 #pragma mark - Matrix Rooms handling
 
-- (void)startPrivateOneToOneRoomWithUserId:(NSString*)userId
+- (void)startPrivateOneToOneRoomWithUserId:(NSString*)userId completion:(void (^)(void))completion
 {
     // Handle here potential multiple accounts
-    [self selectMatrixAccount:^(MXKAccount *selectedAccount)
-    {
+    [self selectMatrixAccount:^(MXKAccount *selectedAccount) {
+        
         MXSession *mxSession = selectedAccount.mxSession;
         
         if (mxSession)
@@ -984,38 +989,65 @@
             {
                 // open it
                 [self.masterTabBarController showRoom:mxRoom.state.roomId withMatrixSession:mxSession];
-            } else
+                
+                if (completion)
+                {
+                    completion();
+                }
+                
+            }
+            else
             {
                 // create a new room
                 [mxSession createRoom:nil
                            visibility:kMXRoomVisibilityPrivate
                             roomAlias:nil
                                 topic:nil
-                              success:^(MXRoom *room)
-                {
-                    // invite the other user only if it is defined and not onself
-                    if (userId && ![mxSession.myUser.userId isEqualToString:userId])
-                    {
-                        // add the user
-                        [room inviteUser:userId success:^{
-                        } failure:^(NSError *error)
-                        {
-                            NSLog(@"[AppDelegate] %@ invitation failed (roomId: %@): %@", userId, room.state.roomId, error);
-                            //Alert user
-                            [self showErrorAsAlert:error];
-                        }];
-                    }
-                    
-                    // Open created room
-                    [self.masterTabBarController showRoom:room.state.roomId withMatrixSession:mxSession];
-                    
-                } failure:^(NSError *error)
-                {
-                    NSLog(@"[AppDelegate] Create room failed: %@", error);
-                    //Alert user
-                    [self showErrorAsAlert:error];
-                }];
+                              success:^(MXRoom *room) {
+                                  
+                                  // invite the other user only if it is defined and not onself
+                                  if (userId && ![mxSession.myUser.userId isEqualToString:userId])
+                                  {
+                                      // add the user
+                                      [room inviteUser:userId
+                                               success:^{
+                                               }
+                                               failure:^(NSError *error) {
+                                                   
+                                                   NSLog(@"[AppDelegate] %@ invitation failed (roomId: %@): %@", userId, room.state.roomId, error);
+                                                   //Alert user
+                                                   [self showErrorAsAlert:error];
+                                                   
+                                               }];
+                                  }
+                                  
+                                  // Open created room
+                                  [self.masterTabBarController showRoom:room.state.roomId withMatrixSession:mxSession];
+                                  
+                                  if (completion)
+                                  {
+                                      completion();
+                                  }
+                                  
+                              }
+                              failure:^(NSError *error) {
+                                  
+                                  NSLog(@"[AppDelegate] Create room failed: %@", error);
+                                  
+                                  //Alert user
+                                  [self showErrorAsAlert:error];
+                                  
+                                  if (completion)
+                                  {
+                                      completion();
+                                  }
+                                  
+                              }];
             }
+        }
+        else if (completion)
+        {
+            completion();
         }
     }];
 }
@@ -1117,16 +1149,16 @@
 
 #pragma mark - MXKContactDetailsViewControllerDelegate
 
-- (void)contactDetailsViewController:(MXKContactDetailsViewController *)contactDetailsViewController startChatWithMatrixId:(NSString *)matrixId
+- (void)contactDetailsViewController:(MXKContactDetailsViewController *)contactDetailsViewController startChatWithMatrixId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [self startPrivateOneToOneRoomWithUserId:matrixId];
+    [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
 }
 
 #pragma mark - MXKRoomMemberDetailsViewControllerDelegate
 
-- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId
+- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [self startPrivateOneToOneRoomWithUserId:matrixId];
+    [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
 }
 
 #pragma mark - Call status handling
