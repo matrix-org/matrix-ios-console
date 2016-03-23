@@ -172,7 +172,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef DEBUG
+    // log the full launchOptions only in DEBUG
     NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: %@", launchOptions);
+#else
+    NSLog(@"[AppDelegate] didFinishLaunchingWithOptions");
+#endif
 
     // Override point for customization after application launch.
     if ([self.window.rootViewController isKindOfClass:[MasterTabBarController class]])
@@ -224,17 +229,8 @@
         [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // Add matrix observers and initialize matrix sessions.
+        // Add matrix observers, and initialize matrix sessions if the app is not launched in background.
         [self initMatrixSessions];
-    }
-    
-    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
-    
-    // The application is launched if there is a new notification
-    if ((remoteNotif) && ([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground))
-    {
-        // do something when the app is launched on background
-        NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: the application is launched in background");
     }
     
     return YES;
@@ -308,6 +304,9 @@
     // cancel any background sync before resuming
     // i.e. warn IOS that there is no new data with any received push.
     [self cancelBackgroundSync];
+    
+    // Open account session(s) if this is not already done (see [initMatrixSessions] in case of background launch).
+    [[MXKAccountManager sharedManager] prepareSessionForActiveAccounts];
     
     _isAppForeground = YES;
 }
@@ -416,7 +415,9 @@
 {
 #ifdef DEBUG
     // log the full userInfo only in DEBUG
-    NSLog(@"[AppDelegate] APNS: %@", userInfo);
+    NSLog(@"[AppDelegate] didReceiveRemoteNotification: %@", userInfo);
+#else
+    NSLog(@"[AppDelegate] didReceiveRemoteNotification");
 #endif
     
     // Look for the room id
@@ -672,8 +673,20 @@
     // Use MXFileStore as MXStore to permanently store events.
     accountManager.storeClass = [MXFileStore class];
 
-    // Observers have been defined, we start now a matrix session for each enabled accounts.
-    [accountManager openSessionForActiveAccounts];
+    // Observers have been defined, we can start a matrix session for each enabled accounts.
+    // except if the app is still in background.
+    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        [accountManager prepareSessionForActiveAccounts];
+    }
+    else
+    {
+        // The app is launched in background as a result of a remote notification.
+        // Presently we are not able to initialize the matrix session(s) in background.
+        // FIXME: initialize matrix session(s) in case of a background launch.
+        // Patch: the account session(s) will be opened when the app will enter foreground.
+        NSLog(@"[AppDelegate] initMatrixSessions: The application has been launched in background");
+    }
     
     // Check whether we're already logged in
     NSArray *mxAccounts = accountManager.accounts;
