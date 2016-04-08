@@ -109,6 +109,12 @@
 
 - (void)contactListViewController:(MXKContactListViewController *)contactListViewController didSelectContact:(NSString*)contactId
 {
+    // Check whether an action is already in progress
+    if ([self hasPendingAction])
+    {
+        return;
+    }
+    
     MXKContact *contact = [[MXKContactManager sharedManager] contactWithContactID:contactId];
     
     __weak typeof(self) weakSelf = self;
@@ -142,17 +148,24 @@
                 
                 self.startChatMenu = [[MXKAlert alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedStringFromTable(@"chat_with_user", @"MatrixConsole", nil), matrixID]  message:nil style:MXKAlertStyleAlert];
                 
-                [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-                 {
-                     weakSelf.startChatMenu = nil;
-                 }];
+                [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                    
+                    weakSelf.startChatMenu = nil;
+                    
+                }];
                 
-                [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-                 {
-                     weakSelf.startChatMenu = nil;
-                     
-                     [[AppDelegate theDelegate] startPrivateOneToOneRoomWithUserId:matrixID];
-                 }];
+                [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                    
+                    weakSelf.startChatMenu = nil;
+                    
+                    [weakSelf addPendingActionMask];
+                    
+                    [[AppDelegate theDelegate] startPrivateOneToOneRoomWithUserId:matrixID completion:^{
+                        
+                        [weakSelf removePendingActionMask];
+                        
+                    }];
+                }];
             }
             else
             {
@@ -160,18 +173,25 @@
                 
                 for(NSString* matrixID in matrixIDs)
                 {
-                    [self.startChatMenu addActionWithTitle:matrixID style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-                     {
-                         weakSelf.startChatMenu = nil;
-                         
-                         [[AppDelegate theDelegate] startPrivateOneToOneRoomWithUserId:matrixID];
-                     }];
+                    [self.startChatMenu addActionWithTitle:matrixID style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                        
+                        weakSelf.startChatMenu = nil;
+                        
+                        [weakSelf addPendingActionMask];
+                        
+                        [[AppDelegate theDelegate] startPrivateOneToOneRoomWithUserId:matrixID completion:^{
+                            
+                            [weakSelf removePendingActionMask];
+                            
+                        }];
+                    }];
                 }
                 
-                [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-                 {
-                     weakSelf.startChatMenu = nil;
-                 }];
+                [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                    
+                    weakSelf.startChatMenu = nil;
+                    
+                }];
                 
                 self.startChatMenu.sourceView = self.tableView;
             }
@@ -184,7 +204,6 @@
         // invite to use matrix
         if (([MFMessageComposeViewController canSendText] ? contact.emailAddresses.count : 0) + (contact.phoneNumbers.count > 0))
         {
-            
             self.startChatMenu = [[MXKAlert alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedStringFromTable(@"invite_this_user_to_use_matrix", @"MatrixConsole", nil)]  message:nil style:MXKAlertStyleActionSheet];
             
             // check if the target can send SMSes
@@ -193,49 +212,50 @@
                 // list phonenumbers
                 for(MXKPhoneNumber* phonenumber in contact.phoneNumbers)
                 {
-                    [self.startChatMenu addActionWithTitle:phonenumber.textNumber style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-                     {
-                         weakSelf.startChatMenu = nil;
-                         
-                         // launch SMS composer
-                         MFMessageComposeViewController *messageComposer = [[MFMessageComposeViewController alloc] init];
-                         
-                         if (messageComposer)
-                             
-                         {
-                             messageComposer.messageComposeDelegate = weakSelf;
-                             messageComposer.body = NSLocalizedStringFromTable(@"invitation_message", @"MatrixConsole", nil);
-                             messageComposer.recipients = [NSArray arrayWithObject:phonenumber.textNumber];
-                             
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 [weakSelf presentViewController:messageComposer animated:YES completion:nil];
-                             });
-                         }
-                     }];
+                    [self.startChatMenu addActionWithTitle:phonenumber.textNumber style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                        
+                        // launch SMS composer
+                        MFMessageComposeViewController *messageComposer = [[MFMessageComposeViewController alloc] init];
+                        
+                        if (messageComposer)
+                        {
+                            messageComposer.messageComposeDelegate = weakSelf;
+                            messageComposer.body = NSLocalizedStringFromTable(@"invitation_message", @"MatrixConsole", nil);
+                            messageComposer.recipients = [NSArray arrayWithObject:phonenumber.textNumber];
+                            
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [weakSelf presentViewController:messageComposer animated:YES completion:nil];
+                            });
+                        }
+                        
+                        weakSelf.startChatMenu = nil;
+                        
+                    }];
                 }
             }
             
             // list emails
             for(MXKEmail* email in contact.emailAddresses)
             {
-                [self.startChatMenu addActionWithTitle:email.emailAddress style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-                 {
-                     weakSelf.startChatMenu = nil;
-                     
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         
-                         NSString* subject = [NSLocalizedStringFromTable(@"invitation_subject", @"MatrixConsole", nil) stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                         NSString* body = [NSLocalizedStringFromTable(@"invitation_message", @"MatrixConsole", nil) stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                         
-                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@", email.emailAddress, subject, body]]];
-                     });
-                 }];
+                [self.startChatMenu addActionWithTitle:email.emailAddress style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        NSString* subject = [NSLocalizedStringFromTable(@"invitation_subject", @"MatrixConsole", nil) stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        NSString* body = [NSLocalizedStringFromTable(@"invitation_message", @"MatrixConsole", nil) stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@", email.emailAddress, subject, body]]];
+                    });
+                    
+                    weakSelf.startChatMenu = nil;
+                }];
             }
             
-            [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert)
-             {
-                 weakSelf.startChatMenu = nil;
-             }];
+            [self.startChatMenu addActionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:MXKAlertActionStyleDefault handler:^(MXKAlert *alert) {
+                
+                weakSelf.startChatMenu = nil;
+                
+            }];
             
             self.startChatMenu.sourceView = self.tableView;
             [self.startChatMenu showInViewController:self];

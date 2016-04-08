@@ -172,7 +172,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef DEBUG
+    // log the full launchOptions only in DEBUG
     NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: %@", launchOptions);
+#else
+    NSLog(@"[AppDelegate] didFinishLaunchingWithOptions");
+#endif
 
     // Override point for customization after application launch.
     if ([self.window.rootViewController isKindOfClass:[MasterTabBarController class]])
@@ -224,17 +229,8 @@
         [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // Add matrix observers and initialize matrix sessions.
+        // Add matrix observers, and initialize matrix sessions if the app is not launched in background.
         [self initMatrixSessions];
-    }
-    
-    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
-    
-    // The application is launched if there is a new notification
-    if ((remoteNotif) && ([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground))
-    {
-        // do something when the app is launched on background
-        NSLog(@"[AppDelegate] didFinishLaunchingWithOptions: the application is launched in background");
     }
     
     return YES;
@@ -308,6 +304,9 @@
     // cancel any background sync before resuming
     // i.e. warn IOS that there is no new data with any received push.
     [self cancelBackgroundSync];
+    
+    // Open account session(s) if this is not already done (see [initMatrixSessions] in case of background launch).
+    [[MXKAccountManager sharedManager] prepareSessionForActiveAccounts];
     
     _isAppForeground = YES;
 }
@@ -416,7 +415,9 @@
 {
 #ifdef DEBUG
     // log the full userInfo only in DEBUG
-    NSLog(@"[AppDelegate] APNS: %@", userInfo);
+    NSLog(@"[AppDelegate] didReceiveRemoteNotification: %@", userInfo);
+#else
+    NSLog(@"[AppDelegate] didReceiveRemoteNotification");
 #endif
     
     // Look for the room id
@@ -633,6 +634,9 @@
         MXKAccount *account = notif.object;
         if (account)
         {
+            // Set the push gateway URL.
+            account.pushGatewayURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"pushGatewayURL"];
+            
             if (isAPNSRegistered)
             {
                 // Enable push notifications by default on new added account
@@ -672,13 +676,36 @@
     // Use MXFileStore as MXStore to permanently store events.
     accountManager.storeClass = [MXFileStore class];
 
-    // Observers have been defined, we start now a matrix session for each enabled accounts.
-    [accountManager openSessionForActiveAccounts];
+    // Observers have been defined, we can start a matrix session for each enabled accounts.
+    // except if the app is still in background.
+    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        [accountManager prepareSessionForActiveAccounts];
+    }
+    else
+    {
+        // The app is launched in background as a result of a remote notification.
+        // Presently we are not able to initialize the matrix session(s) in background.
+        // FIXME: initialize matrix session(s) in case of a background launch.
+        // Patch: the account session(s) will be opened when the app will enter foreground.
+        NSLog(@"[AppDelegate] initMatrixSessions: The application has been launched in background");
+    }
     
     // Check whether we're already logged in
     NSArray *mxAccounts = accountManager.accounts;
     if (mxAccounts.count)
     {
+        // The push gateway url is now configurable
+        // Set this url in the existing accounts when it is undefined.
+        for (MXKAccount *account in mxAccounts)
+        {
+            if (!account.pushGatewayURL)
+            {
+                // Set the push gateway URL.
+                account.pushGatewayURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"pushGatewayURL"];
+            }
+        }
+        
         // Set up push notifications
         [self registerUserNotificationSettings];
         
@@ -959,6 +986,11 @@
         {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             strongSelf->accountPicker = nil;
+            
+            if (onSelection)
+            {
+                onSelection(nil);
+            }
         }];
         
         accountPicker.sourceView = [self.masterTabBarController selectedViewController].view;
@@ -968,11 +1000,11 @@
 
 #pragma mark - Matrix Rooms handling
 
-- (void)startPrivateOneToOneRoomWithUserId:(NSString*)userId
+- (void)startPrivateOneToOneRoomWithUserId:(NSString*)userId completion:(void (^)(void))completion
 {
     // Handle here potential multiple accounts
-    [self selectMatrixAccount:^(MXKAccount *selectedAccount)
-    {
+    [self selectMatrixAccount:^(MXKAccount *selectedAccount) {
+        
         MXSession *mxSession = selectedAccount.mxSession;
         
         if (mxSession)
@@ -984,38 +1016,65 @@
             {
                 // open it
                 [self.masterTabBarController showRoom:mxRoom.state.roomId withMatrixSession:mxSession];
-            } else
+                
+                if (completion)
+                {
+                    completion();
+                }
+                
+            }
+            else
             {
                 // create a new room
                 [mxSession createRoom:nil
                            visibility:kMXRoomVisibilityPrivate
                             roomAlias:nil
                                 topic:nil
-                              success:^(MXRoom *room)
-                {
-                    // invite the other user only if it is defined and not onself
-                    if (userId && ![mxSession.myUser.userId isEqualToString:userId])
-                    {
-                        // add the user
-                        [room inviteUser:userId success:^{
-                        } failure:^(NSError *error)
-                        {
-                            NSLog(@"[AppDelegate] %@ invitation failed (roomId: %@): %@", userId, room.state.roomId, error);
-                            //Alert user
-                            [self showErrorAsAlert:error];
-                        }];
-                    }
-                    
-                    // Open created room
-                    [self.masterTabBarController showRoom:room.state.roomId withMatrixSession:mxSession];
-                    
-                } failure:^(NSError *error)
-                {
-                    NSLog(@"[AppDelegate] Create room failed: %@", error);
-                    //Alert user
-                    [self showErrorAsAlert:error];
-                }];
+                              success:^(MXRoom *room) {
+                                  
+                                  // invite the other user only if it is defined and not onself
+                                  if (userId && ![mxSession.myUser.userId isEqualToString:userId])
+                                  {
+                                      // add the user
+                                      [room inviteUser:userId
+                                               success:^{
+                                               }
+                                               failure:^(NSError *error) {
+                                                   
+                                                   NSLog(@"[AppDelegate] %@ invitation failed (roomId: %@): %@", userId, room.state.roomId, error);
+                                                   //Alert user
+                                                   [self showErrorAsAlert:error];
+                                                   
+                                               }];
+                                  }
+                                  
+                                  // Open created room
+                                  [self.masterTabBarController showRoom:room.state.roomId withMatrixSession:mxSession];
+                                  
+                                  if (completion)
+                                  {
+                                      completion();
+                                  }
+                                  
+                              }
+                              failure:^(NSError *error) {
+                                  
+                                  NSLog(@"[AppDelegate] Create room failed: %@", error);
+                                  
+                                  //Alert user
+                                  [self showErrorAsAlert:error];
+                                  
+                                  if (completion)
+                                  {
+                                      completion();
+                                  }
+                                  
+                              }];
             }
+        }
+        else if (completion)
+        {
+            completion();
         }
     }];
 }
@@ -1117,16 +1176,16 @@
 
 #pragma mark - MXKContactDetailsViewControllerDelegate
 
-- (void)contactDetailsViewController:(MXKContactDetailsViewController *)contactDetailsViewController startChatWithMatrixId:(NSString *)matrixId
+- (void)contactDetailsViewController:(MXKContactDetailsViewController *)contactDetailsViewController startChatWithMatrixId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [self startPrivateOneToOneRoomWithUserId:matrixId];
+    [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
 }
 
 #pragma mark - MXKRoomMemberDetailsViewControllerDelegate
 
-- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId
+- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [self startPrivateOneToOneRoomWithUserId:matrixId];
+    [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
 }
 
 #pragma mark - Call status handling
