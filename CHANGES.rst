@@ -1,3 +1,12 @@
+Changes in Console in 0.6.5 (2016-04-08)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.5).
+
+Bug fixes:
+ * Multiple invitations on Start Chat action.
+
 Changes in Console in 0.6.4 (2016-03-17)
 ===============================================
 
