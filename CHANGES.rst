@@ -1,3 +1,12 @@
+Changes in Console in 0.6.6 (2016-04-26)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.6).
+
+Bug fixes:
+ * The application icon badge number is wrong.
+
 Changes in Console in 0.6.5 (2016-04-08)
 ===============================================
 
