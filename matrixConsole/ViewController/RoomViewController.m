@@ -99,9 +99,9 @@
         // Dispose data source defined for room member list view controller (if any)
         for (id childViewController in self.childViewControllers)
         {
-            if ([childViewController isKindOfClass:[MXKRoomMemberListViewController class]])
+            if ([childViewController isKindOfClass:[RoomMembersViewController class]])
             {
-                MXKRoomMemberListViewController *viewController = (MXKRoomMemberListViewController*)childViewController;
+                RoomMembersViewController *viewController = (RoomMembersViewController*)childViewController;
                 MXKDataSource *dataSource = [viewController dataSource];
                 [viewController destroy];
                 [dataSource destroy];
@@ -304,9 +304,12 @@
     
     if ([[segue identifier] isEqualToString:@"showMemberList"])
     {
-        if ([pushedViewController isKindOfClass:[MXKRoomMemberListViewController class]])
+        if ([pushedViewController isKindOfClass:[RoomMembersViewController class]])
         {
-            MXKRoomMemberListViewController* membersController = (MXKRoomMemberListViewController*)pushedViewController;
+            RoomMembersViewController* membersController = (RoomMembersViewController*)pushedViewController;
+            
+            membersController.roomMembersViewControllerDelegate = self;
+            membersController.enableMention = YES;
             
             // Dismiss keyboard
             [self dismissKeyboard];
@@ -322,16 +325,38 @@
         if (selectedRoomMember)
         {
             MXKRoomMemberDetailsViewController *memberViewController = pushedViewController;
+            
             // Set rageShake handler
             memberViewController.rageShakeManager = [RageShakeManager sharedManager];
+            
             // Set delegate to handle start chat option
-            memberViewController.delegate = [AppDelegate theDelegate];
+            memberViewController.delegate = self;
+            memberViewController.enableMention = YES;
             
             [memberViewController displayRoomMember:selectedRoomMember withMatrixRoom:self.roomDataSource.room];
             
             selectedRoomMember = nil;
         }
     }
+}
+
+#pragma mark - MXKRoomMemberDetailsViewControllerDelegate
+
+- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
+{
+    [[AppDelegate theDelegate] startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
+}
+
+- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController mention:(MXRoomMember *)member
+{
+    [self mention:member];
+}
+
+#pragma mark - RoomMembersViewControllerDelegate
+
+- (void)roomMembersViewController:(RoomMembersViewController *)roomMembersViewController mention:(MXRoomMember*)member
+{
+    [self mention:member];
 }
 
 #pragma mark - Action

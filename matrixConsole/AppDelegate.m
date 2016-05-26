@@ -1181,13 +1181,6 @@
     [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
 }
 
-#pragma mark - MXKRoomMemberDetailsViewControllerDelegate
-
-- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
-{
-    [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
-}
-
 #pragma mark - Call status handling
 
 - (void)addCallStatusBar
