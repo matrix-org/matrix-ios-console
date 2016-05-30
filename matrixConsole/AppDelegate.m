@@ -820,7 +820,7 @@
 {
     NSLog(@"[AppDelegate] refreshApplicationIconBadgeNumber");
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [MXKRoomDataSourceManager notificationCount];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [MXKRoomDataSourceManager missedDiscussionsCount];
 }
 
 - (void)enableInAppNotificationsForAccount:(MXKAccount*)account
