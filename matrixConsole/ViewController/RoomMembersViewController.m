@@ -25,6 +25,10 @@
      The selected member
      */
     MXRoomMember *selectedMember;
+    
+    /**
+     */
+    MXKRoomMemberDetailsViewController *detailsViewController;
 }
 
 @end
@@ -52,6 +56,17 @@
     self.delegate = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (detailsViewController)
+    {
+        [detailsViewController destroy];
+        detailsViewController = nil;
+    }
+}
+
 - (void)dealloc
 {
     selectedMember = nil;
@@ -61,6 +76,21 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+
+- (void)setEnableMention:(BOOL)enableMention
+{
+    if (_enableMention != enableMention)
+    {
+        _enableMention = enableMention;
+        
+        if (detailsViewController)
+        {
+            detailsViewController.enableMention = enableMention;
+        }
+    }
 }
 
 #pragma mark - Segues
@@ -74,13 +104,15 @@
     {
         if (selectedMember)
         {
-            MXKRoomMemberDetailsViewController *memberViewController = segue.destinationViewController;
-            // Set rageShake handler
-            memberViewController.rageShakeManager = [RageShakeManager sharedManager];
-            // Set delegate to handle start chat option
-            memberViewController.delegate = [AppDelegate theDelegate];
+            detailsViewController = segue.destinationViewController;
             
-            [memberViewController displayRoomMember:selectedMember withMatrixRoom:[self.mainSession roomWithRoomId:self.dataSource.roomId]];
+            // Set rageShake handler
+            detailsViewController.rageShakeManager = [RageShakeManager sharedManager];
+            // Set delegate to handle start chat option
+            detailsViewController.delegate = self;
+            detailsViewController.enableMention = _enableMention;
+            
+            [detailsViewController displayRoomMember:selectedMember withMatrixRoom:[self.mainSession roomWithRoomId:self.dataSource.roomId]];
         }
     }
 }
@@ -91,6 +123,27 @@
     // Report the selected member and open details view
     selectedMember = member;
     [self performSegueWithIdentifier:@"showDetails" sender:self];
+}
+
+#pragma mark - MXKRoomMemberDetailsViewControllerDelegate
+
+- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
+{
+    [[AppDelegate theDelegate] startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
+}
+
+- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController mention:(MXRoomMember *)member
+{
+    if (_roomMembersViewControllerDelegate)
+    {
+        id<RoomMembersViewControllerDelegate> delegate = _roomMembersViewControllerDelegate;
+        
+        [self withdrawViewControllerAnimated:YES completion:^{
+            
+            [delegate roomMembersViewController:self mention:member];
+            
+        }];
+    }
 }
 
 @end

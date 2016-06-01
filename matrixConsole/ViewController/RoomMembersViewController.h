@@ -16,7 +16,36 @@
 
 #import <MatrixKit/MatrixKit.h>
 
-@interface RoomMembersViewController : MXKRoomMemberListViewController <MXKRoomMemberListViewControllerDelegate>
+@class RoomMembersViewController;
+
+/**
+ `RoomMembersViewController` delegate.
+ */
+@protocol RoomMembersViewControllerDelegate <NSObject>
+
+/**
+ Tells the delegate that the user wants to mention a room member.
+ 
+ @discussion the `RoomMembersViewController` instance is withdrawn automatically.
+ 
+ @param roomMembersViewController the `RoomMembersViewController` instance.
+ @param member the room member to mention.
+ */
+- (void)roomMembersViewController:(RoomMembersViewController *)roomMembersViewController mention:(MXRoomMember*)member;
+
+@end
+
+@interface RoomMembersViewController : MXKRoomMemberListViewController <MXKRoomMemberListViewControllerDelegate, MXKRoomMemberDetailsViewControllerDelegate>
+
+/**
+ Enable mention option in member details view. NO by default
+ */
+@property (nonatomic) BOOL enableMention;
+
+/**
+ The delegate for the view controller.
+ */
+@property (nonatomic) id<RoomMembersViewControllerDelegate> roomMembersViewControllerDelegate;
 
 @end
 

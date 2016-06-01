@@ -16,7 +16,9 @@
 
 #import <MatrixKit/MatrixKit.h>
 
-@interface RoomViewController : MXKRoomViewController
+#import "RoomMembersViewController.h"
+
+@interface RoomViewController : MXKRoomViewController <MXKRoomMemberDetailsViewControllerDelegate, RoomMembersViewControllerDelegate>
 
 @end
 

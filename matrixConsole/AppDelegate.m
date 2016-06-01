@@ -820,7 +820,7 @@
 {
     NSLog(@"[AppDelegate] refreshApplicationIconBadgeNumber");
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [MXKRoomDataSourceManager notificationCount];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [MXKRoomDataSourceManager missedDiscussionsCount];
 }
 
 - (void)enableInAppNotificationsForAccount:(MXKAccount*)account
@@ -1177,13 +1177,6 @@
 #pragma mark - MXKContactDetailsViewControllerDelegate
 
 - (void)contactDetailsViewController:(MXKContactDetailsViewController *)contactDetailsViewController startChatWithMatrixId:(NSString *)matrixId completion:(void (^)(void))completion
-{
-    [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
-}
-
-#pragma mark - MXKRoomMemberDetailsViewControllerDelegate
-
-- (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
     [self startPrivateOneToOneRoomWithUserId:matrixId completion:completion];
 }
