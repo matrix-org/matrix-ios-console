@@ -1,3 +1,10 @@
+Changes in Console in 0.6.8 (2016-06-01)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.8).
+ * Change App badge handling: Replace the missed notifications count with the missed discussions count.
+
 Changes in Console in 0.6.6 (2016-04-26)
 ===============================================
 
