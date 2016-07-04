@@ -20,72 +20,47 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - GBDeviceInfo (3.4.1):
-    - GBJailbreakDetection (~> 1.0)
-  - GBJailbreakDetection (1.3.0)
+  - DTCoreText (1.6.17):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTFoundation/Core (1.7.10)
+  - DTFoundation/DTAnimatedGIF (1.7.10)
+  - DTFoundation/DTHTMLParser (1.7.10):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.7.10):
+    - DTFoundation/Core
+  - GBDeviceInfo (4.1.0):
+    - GBDeviceInfo/Core (= 4.1.0)
+  - GBDeviceInfo/Core (4.1.0)
+  - GHMarkdownParser (0.1.2)
   - HPGrowingTextView (1.1)
-  - libPhoneNumber-iOS (0.8.11)
-  - MatrixKit (0.3.5):
+  - libPhoneNumber-iOS (0.8.14)
+  - MatrixKit (0.3.10):
+    - DTCoreText (~> 1.6.17)
+    - GHMarkdownParser (~> 0.1.2)
     - HPGrowingTextView (~> 1.1)
-    - libPhoneNumber-iOS (~> 0.8.7)
-    - MatrixSDK (~> 0.6.5)
-  - MatrixOpenWebRTCWrapper (0.0.2):
-    - MatrixSDK
-    - OpenWebRTC-SDK
-  - MatrixSDK (0.6.5):
+    - libPhoneNumber-iOS (~> 0.8.14)
+    - MatrixSDK (~> 0.6.9)
+  - MatrixSDK (0.6.9):
     - AFNetworking (~> 2.6.0)
-  - OpenWebRTC (0.3.1)
-  - OpenWebRTC-SDK (0.1.1):
-    - OpenWebRTC
 
 DEPENDENCIES:
-  - GBDeviceInfo (~> 3.4.0)
-  - MatrixKit (from `https://github.com/matrix-org/matrix-ios-kit.git`, branch `develop`)
-  - MatrixOpenWebRTCWrapper (from `https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git`,
-    branch `master`)
-  - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - OpenWebRTC (= 0.3.1)
-  - OpenWebRTC-SDK (from `https://github.com/matrix-org/openwebrtc-ios-sdk.git`, branch
-    `cvo_support`)
-
-EXTERNAL SOURCES:
-  MatrixKit:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-kit.git
-  MatrixOpenWebRTCWrapper:
-    :branch: master
-    :git: https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git
-  MatrixSDK:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-  OpenWebRTC-SDK:
-    :branch: cvo_support
-    :git: https://github.com/matrix-org/openwebrtc-ios-sdk.git
-
-CHECKOUT OPTIONS:
-  MatrixKit:
-    :commit: b4cc5e3530216023fa78cadcae42624b8af1b60e
-    :git: https://github.com/matrix-org/matrix-ios-kit.git
-  MatrixOpenWebRTCWrapper:
-    :commit: cfe1429ac809a63dc2c1dd11da70c7e27be52f03
-    :git: https://github.com/matrix-org/matrix-ios-openwebrtc-wrapper.git
-  MatrixSDK:
-    :commit: 48e2580540dbd5bf312f75d60c8922f6e2ca11d5
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-  OpenWebRTC-SDK:
-    :commit: eb8ce71475cdd1c2879279daff48be6264237fca
-    :git: https://github.com/matrix-org/openwebrtc-ios-sdk.git
+  - GBDeviceInfo (~> 4.1.0)
+  - MatrixKit (~> 0.3.10)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  GBDeviceInfo: bab0f43d351b6f641a626cd7d21492abef1afe46
-  GBJailbreakDetection: a216773574b62dddb6c876ffdb52c54ac05e27e0
+  DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
+  DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
+  GBDeviceInfo: e50df975a95e21faec93e2bf98376846fe17d307
+  GHMarkdownParser: 14cbf59d0ab9450017d843dffd4a3ef691e5bd77
   HPGrowingTextView: 88a716d97fb853bcb08a4a08e4727da17efc9b19
-  libPhoneNumber-iOS: ded33fab2c51ee847979556aa504c9e70f32d703
-  MatrixKit: defac2bf01d1397e00cf4b1a72a25ac10c2c901c
-  MatrixOpenWebRTCWrapper: c56ed570f9151853576c14f71cea7c7c57255830
-  MatrixSDK: 598925faff319441724db8a6af2a9cfc21d167e5
-  OpenWebRTC: 85be1caf6dc45b11106eacba93de61e3e52b1cf8
-  OpenWebRTC-SDK: fd66e49ab80e88ed1e55231ac875a4976dc3ba74
+  libPhoneNumber-iOS: fb165271ebe7fb32e55da97b83219382f2f9d409
+  MatrixKit: f777a251efb4c62d6b6414dab032998add4a415e
+  MatrixSDK: 46b12fd15ef0d50c6ac189989897855b47ce6ba2
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 21415bec858138b11732714428574dba6f2a9a8b
+
+COCOAPODS: 1.0.1
