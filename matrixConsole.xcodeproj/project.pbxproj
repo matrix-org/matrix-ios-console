@@ -15,8 +15,8 @@
 		F013EEEC1A40D437002BB093 /* matrixConsole-Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F013EEEB1A40D437002BB093 /* matrixConsole-Defaults.plist */; };
 		F01449A31B53E06A00EA7D73 /* GlobalNotificationSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01449A21B53E06A00EA7D73 /* GlobalNotificationSettingsViewController.m */; };
 		F01449B41B56B14D00EA7D73 /* AccountDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01449B31B56B14D00EA7D73 /* AccountDetailsViewController.m */; };
-		F01C113F1BCEA23E00FCDE1E /* matrixConsole.png in Resources */ = {isa = PBXBuildFile; fileRef = F01C113E1BCEA23E00FCDE1E /* matrixConsole.png */; settings = {ASSET_TAGS = (); }; };
-		F01C11411BCEA27C00FCDE1E /* matrixConsole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F01C11401BCEA27C00FCDE1E /* matrixConsole@2x.png */; settings = {ASSET_TAGS = (); }; };
+		F01C113F1BCEA23E00FCDE1E /* matrixConsole.png in Resources */ = {isa = PBXBuildFile; fileRef = F01C113E1BCEA23E00FCDE1E /* matrixConsole.png */; };
+		F01C11411BCEA27C00FCDE1E /* matrixConsole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F01C11401BCEA27C00FCDE1E /* matrixConsole@2x.png */; };
 		F03EF5F619F171EB00A0EE52 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03EF5EB19F171EB00A0EE52 /* HomeViewController.m */; };
 		F03EF5F719F171EB00A0EE52 /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03EF5ED19F171EB00A0EE52 /* AuthenticationViewController.m */; };
 		F03EF5F819F171EB00A0EE52 /* MasterTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03EF5EF19F171EB00A0EE52 /* MasterTabBarController.m */; };
@@ -308,12 +308,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F07A80F819DD9DE700B621A1 /* Build configuration list for PBXNativeTarget "matrixConsole" */;
 			buildPhases = (
-				A063750719371855C7755702 /* Check Pods Manifest.lock */,
+				A063750719371855C7755702 /* [CP] Check Pods Manifest.lock */,
 				F07A80CE19DD9DE700B621A1 /* Sources */,
 				F07A80CF19DD9DE700B621A1 /* Frameworks */,
 				F07A80D019DD9DE700B621A1 /* Resources */,
-				3496B335A95D95AB2A8DCEF4 /* Copy Pods Resources */,
-				56D720977680A8858FD17E8D /* Embed Pods Frameworks */,
+				3496B335A95D95AB2A8DCEF4 /* [CP] Copy Pods Resources */,
+				56D720977680A8858FD17E8D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -415,14 +415,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3496B335A95D95AB2A8DCEF4 /* Copy Pods Resources */ = {
+		3496B335A95D95AB2A8DCEF4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,14 +430,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-matrixConsole/Pods-matrixConsole-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		56D720977680A8858FD17E8D /* Embed Pods Frameworks */ = {
+		56D720977680A8858FD17E8D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,14 +445,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-matrixConsole/Pods-matrixConsole-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A063750719371855C7755702 /* Check Pods Manifest.lock */ = {
+		A063750719371855C7755702 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

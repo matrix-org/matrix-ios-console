@@ -1027,7 +1027,7 @@
             {
                 // create a new room
                 [mxSession createRoom:nil
-                           visibility:kMXRoomVisibilityPrivate
+                           visibility:kMXRoomDirectoryVisibilityPrivate
                             roomAlias:nil
                                 topic:nil
                               success:^(MXRoom *room) {
