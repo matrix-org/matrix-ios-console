@@ -28,7 +28,7 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
-#define MX_CALL_STACK_OPENWEBRTC
+//#define MX_CALL_STACK_OPENWEBRTC
 #ifdef MX_CALL_STACK_OPENWEBRTC
 #import <MatrixOpenWebRTCWrapper/MatrixOpenWebRTCWrapper.h>
 #endif
@@ -36,6 +36,8 @@
 #ifdef MX_CALL_STACK_ENDPOINT
 #import <MatrixEndpointWrapper/MatrixEndpointWrapper.h>
 #endif
+
+#include <MatrixSDK/MXJingleCallStack.h>
 
 #define MAKE_STRING(x) #x
 #define MAKE_NS_STRING(x) @MAKE_STRING(x)
@@ -576,6 +578,9 @@
 #endif
 #ifdef MX_CALL_STACK_ENDPOINT
             callStack = [[MXEndpointCallStack alloc] initWithMatrixId:mxSession.myUser.userId];
+#endif
+#ifdef MX_CALL_STACK_JINGLE
+            callStack = [[MXJingleCallStack alloc] init];
 #endif
             if (callStack)
             {

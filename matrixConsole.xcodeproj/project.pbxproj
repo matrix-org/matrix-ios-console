@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		32F90B7B1B28906400DDC61B /* empty.mm in Sources */ = {isa = PBXBuildFile; fileRef = 32F90B7A1B28906400DDC61B /* empty.mm */; };
-		71193D241A6D64F900E59A9E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71193D231A6D64F900E59A9E /* AddressBook.framework */; };
 		71193D291A6E3DC000E59A9E /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71193D281A6E3DC000E59A9E /* ContactsViewController.m */; };
 		717629521A7A682A00927125 /* countryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 717629511A7A682A00927125 /* countryCodes.plist */; };
 		D648B86A591308736E2D4078 /* libPods-matrixConsole.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8141B1E2401FFCC3C5B99234 /* libPods-matrixConsole.a */; };
@@ -29,7 +28,6 @@
 		F07A80E619DD9DE700B621A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F07A80E519DD9DE700B621A1 /* Images.xcassets */; };
 		F07A80E919DD9DE700B621A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F07A80E719DD9DE700B621A1 /* LaunchScreen.xib */; };
 		F07A80F519DD9DE700B621A1 /* matrixConsoleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F07A80F419DD9DE700B621A1 /* matrixConsoleTests.m */; };
-		F08DCBDB1A093BFA008C65B6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08DCBDA1A093BFA008C65B6 /* MobileCoreServices.framework */; };
 		F0A1A5F71B73C1370061FE52 /* icon_users.png in Resources */ = {isa = PBXBuildFile; fileRef = F0A1A5EB1B73C1370061FE52 /* icon_users.png */; };
 		F0A1A5F81B73C1370061FE52 /* icon_users@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0A1A5EC1B73C1370061FE52 /* icon_users@2x.png */; };
 		F0A1A5FA1B73C1370061FE52 /* tab_home.ico in Resources */ = {isa = PBXBuildFile; fileRef = F0A1A5EE1B73C1370061FE52 /* tab_home.ico */; };
@@ -42,7 +40,6 @@
 		F0A1A6061B73C66F0061FE52 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F0A1A6021B73C66F0061FE52 /* Localizable.strings */; };
 		F0A1A6071B73C66F0061FE52 /* MatrixConsole.strings in Resources */ = {isa = PBXBuildFile; fileRef = F0A1A6041B73C66F0061FE52 /* MatrixConsole.strings */; };
 		F0ADEFFB1AD7D2B3008A4F21 /* RoomMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0ADEFFA1AD7D2B3008A4F21 /* RoomMembersViewController.m */; };
-		F0F148A81AB1BF01005F5D4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F148A71AB1BF01005F5D4A /* AudioToolbox.framework */; };
 		F0F535BB1ACD6C4F00B603F8 /* RageShakeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F535BA1ACD6C4F00B603F8 /* RageShakeManager.m */; };
 /* End PBXBuildFile section */
 
@@ -119,9 +116,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0F148A81AB1BF01005F5D4A /* AudioToolbox.framework in Frameworks */,
-				71193D241A6D64F900E59A9E /* AddressBook.framework in Frameworks */,
-				F08DCBDB1A093BFA008C65B6 /* MobileCoreServices.framework in Frameworks */,
 				D648B86A591308736E2D4078 /* libPods-matrixConsole.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,7 +621,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = matrixConsole/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -642,7 +636,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = matrixConsole/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
