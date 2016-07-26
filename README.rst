@@ -3,6 +3,9 @@ Console
 
 Console is an iOS Matrix client. 
 
+.. image:: https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg
+   :target: https://itunes.apple.com/us/app/matrix-console/id970074271?mt=8
+
 It is also a sample that demonstrates how to use 
 MatrixKit (https://github.com/matrix-org/matrix-ios-kit) and 
 MatrixSDK (https://github.com/matrix-org/matrix-ios-sdk) in an iOS app.
