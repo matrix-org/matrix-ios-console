@@ -1,3 +1,11 @@
+Changes in Console in 0.6.10 (2016-07-26)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.12).
+ * Enable VoIP for 1:1 room
+ * Add Markdown support
+ 
 Changes in Console in 0.6.9 (2016-07-04)
 ===============================================
 
