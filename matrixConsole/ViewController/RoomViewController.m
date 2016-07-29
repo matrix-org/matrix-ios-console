@@ -365,7 +365,24 @@
 {
     if (sender == voipVoiceCallButton || sender == voipVideoCallButton)
     {
-        [self.mainSession.callManager placeCallInRoom:self.roomDataSource.roomId withVideo:(sender == voipVideoCallButton)];
+        BOOL isVideoCall = (sender == voipVideoCallButton);
+        NSString *appDisplayName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+
+        // Check app permissions before placing the call
+        [MXKTools checkAccessForCall:isVideoCall
+         manualChangeMessageForAudio:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"microphone_access_not_granted_for_call"], appDisplayName]
+         manualChangeMessageForVideo:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"camera_access_not_granted_for_call"], appDisplayName]
+           showPopUpInViewController:self completionHandler:^(BOOL granted) {
+
+               if (granted)
+               {
+                   [self.roomDataSource.room placeCallWithVideo:isVideoCall];
+               }
+               else
+               {
+                   NSLog(@"RoomViewController: Warning: The application does not have the perssion to place the call");
+               }
+           }];
     }
 }
 
