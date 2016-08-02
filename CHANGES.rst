@@ -1,3 +1,17 @@
+Changes in Console in 0.6.11 (2016-08-02)
+===============================================
+
+Improvements:
+ * Upgrade MatrixKit version (v0.3.13).
+ * Call: Check permissions before accessing to the camera and the microphone.
+ * Call Better handle call invites when the app resumes.
+ * Call: Improve the sending of local ICE candidates to avoid HTTP 429(Too Many Requests) response
+ 
+Bug fixes:
+ * Call: Make audio continue to work when backgrounding the app.
+ * Call: Added sanity check on creation of RTCICEServer objects as crashes have been reported.
+ * Call: call must be available in 1:1 rooms (invited and banned users do not count).
+
 Changes in Console in 0.6.10 (2016-07-26)
 ===============================================
 
