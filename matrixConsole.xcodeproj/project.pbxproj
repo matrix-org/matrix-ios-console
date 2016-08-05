@@ -10,6 +10,7 @@
 		32F90B7B1B28906400DDC61B /* empty.mm in Sources */ = {isa = PBXBuildFile; fileRef = 32F90B7A1B28906400DDC61B /* empty.mm */; };
 		71193D291A6E3DC000E59A9E /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71193D281A6E3DC000E59A9E /* ContactsViewController.m */; };
 		717629521A7A682A00927125 /* countryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 717629511A7A682A00927125 /* countryCodes.plist */; };
+		A35904A21C99CB5A00277217 /* contacts_filled_44.png in Resources */ = {isa = PBXBuildFile; fileRef = A35904A11C99CB5A00277217 /* contacts_filled_44.png */; };
 		D648B86A591308736E2D4078 /* libPods-matrixConsole.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8141B1E2401FFCC3C5B99234 /* libPods-matrixConsole.a */; };
 		F013EEEC1A40D437002BB093 /* matrixConsole-Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = F013EEEB1A40D437002BB093 /* matrixConsole-Defaults.plist */; };
 		F01449A31B53E06A00EA7D73 /* GlobalNotificationSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01449A21B53E06A00EA7D73 /* GlobalNotificationSettingsViewController.m */; };
@@ -61,6 +62,7 @@
 		71193D281A6E3DC000E59A9E /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		717629511A7A682A00927125 /* countryCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = countryCodes.plist; path = Resources/countryCodes.plist; sourceTree = "<group>"; };
 		8141B1E2401FFCC3C5B99234 /* libPods-matrixConsole.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-matrixConsole.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A35904A11C99CB5A00277217 /* contacts_filled_44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contacts_filled_44.png; sourceTree = "<group>"; };
 		B7EC7E45C718BF2BBCE0CF48 /* Pods-matrixConsole.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matrixConsole.debug.xcconfig"; path = "Pods/Target Support Files/Pods-matrixConsole/Pods-matrixConsole.debug.xcconfig"; sourceTree = "<group>"; };
 		F013EEEB1A40D437002BB093 /* matrixConsole-Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "matrixConsole-Defaults.plist"; sourceTree = "<group>"; };
 		F01449A11B53E06A00EA7D73 /* GlobalNotificationSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalNotificationSettingsViewController.h; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				F0A1A5F01B73C1370061FE52 /* tab_recents@2x.png */,
 				F0A1A5F11B73C1370061FE52 /* tab_settings.png */,
 				F0A1A5F21B73C1370061FE52 /* tab_settings@2x.png */,
+				A35904A11C99CB5A00277217 /* contacts_filled_44.png */,
 				F0A1A5F31B73C1370061FE52 /* video.png */,
 				F0A1A5F41B73C1370061FE52 /* voice.png */,
 			);
@@ -383,6 +386,7 @@
 				F01C113F1BCEA23E00FCDE1E /* matrixConsole.png in Resources */,
 				F0A1A5F81B73C1370061FE52 /* icon_users@2x.png in Resources */,
 				F07A80E419DD9DE700B621A1 /* Main.storyboard in Resources */,
+				A35904A21C99CB5A00277217 /* contacts_filled_44.png in Resources */,
 				F013EEEC1A40D437002BB093 /* matrixConsole-Defaults.plist in Resources */,
 				F0A1A5F71B73C1370061FE52 /* icon_users.png in Resources */,
 				F07A80E919DD9DE700B621A1 /* LaunchScreen.xib in Resources */,
