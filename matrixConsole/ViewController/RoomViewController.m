@@ -235,7 +235,7 @@
     if (self.roomDataSource && self.roomDataSource.state == MXKDataSourceStateReady)
     {
         // Check conditions to display voip call buttons
-        if (self.roomDataSource.room.state.joinedMembers.count == 2 && self.mainSession.callManager)
+        if (self.roomDataSource.room.state.joinedMembers.count >= 2 && self.mainSession.callManager)
         {
             if (!voipVoiceCallBarButtonItem || !voipVideoCallBarButtonItem)
             {
@@ -376,7 +376,7 @@
 
                if (granted)
                {
-                   [self.roomDataSource.room placeCallWithVideo:isVideoCall];
+                   [self.roomDataSource.room placeCallWithVideo:isVideoCall success:nil failure:nil];
                }
                else
                {
