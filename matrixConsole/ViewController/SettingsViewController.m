@@ -63,6 +63,7 @@
     UISwitch *sortMembersSwitch;
     UISwitch *displayLeftMembersSwitch;
     MXKTableViewCellWithLabelAndSlider* maxCacheSizeCell;
+    NSUInteger cacheSize;
     NSUInteger minimumCacheSize;
     UIButton *clearCacheButton;
 
@@ -151,7 +152,10 @@
     }
     
     selectedCountryCode = countryCode = [_settings phonebookCountryCode];
-    
+
+    // Refresh file stores disk usage asynchronously
+    [self updateMXCacheSize];
+
     // Update the minimum cache size with the current value
     // Dispatch this operation to not freeze the app
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -166,6 +170,12 @@
         
         // Refresh table to remove this account
         [self.tableView reloadData];
+
+        // Refresh file stores disk usage
+        // Dispatch this operation to not freeze the app
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateMXCacheSize];
+        });
     }];
 }
 
@@ -298,6 +308,7 @@
     else if (sender == clearCacheButton)
     {
         [[AppDelegate theDelegate] reloadMatrixSessions:YES];
+        [self updateMXCacheSize];
     }
 }
 
@@ -799,19 +810,50 @@
 // return the MX cache size in bytes
 - (NSUInteger)MXCacheSize
 {
-    NSUInteger cacheSize = 0;
-    
-    NSArray *mxSessions = self.mxSessions;
-    for (MXSession *mxSession in mxSessions)
+    return cacheSize;
+}
+
+// Refresh file stores disk usage asynchronously
+- (void)updateMXCacheSize
+{
+    [self MXCacheSize:0 intermediateDiskUsage:0 block:^(NSUInteger diskUsage) {
+
+        cacheSize = diskUsage;
+
+        [self.tableView reloadRowsAtIndexPaths:@[
+                                                 [NSIndexPath indexPathForRow:SETTINGS_SECTION_ROOMS_SET_CACHE_SIZE_INDEX + afterChromeOffset
+                                                                    inSection:SETTINGS_SECTION_ROOMS_INDEX],
+                                                 [NSIndexPath indexPathForRow:SETTINGS_SECTION_ROOMS_CLEAR_CACHE_INDEX + afterChromeOffset
+                                                                    inSection:SETTINGS_SECTION_ROOMS_INDEX],
+                                                 ] withRowAnimation:UITableViewRowAnimationNone];
+    }];
+}
+
+// Recursive method to asynchronously get the disk usage of all file stores of all sessions
+- (void)MXCacheSize:(NSUInteger)sessionIndex intermediateDiskUsage:(NSUInteger)intermediateDiskUsage block:(void(^)(NSUInteger diskUsage))block
+{
+    if (sessionIndex == self.mxSessions.count)
     {
+        block(intermediateDiskUsage);
+    }
+    else
+    {
+        MXSession *mxSession = self.mxSessions[sessionIndex];
+
         if (mxSession.store && [mxSession.store isKindOfClass:[MXFileStore class]])
         {
             MXFileStore *fileStore = (MXFileStore*)mxSession.store;
-            cacheSize += fileStore.diskUsage;
+
+            [fileStore diskUsageWithBlock:^(NSUInteger diskUsage) {
+
+                [self MXCacheSize:(sessionIndex + 1) intermediateDiskUsage:(intermediateDiskUsage + diskUsage) block:block];
+            }];
+        }
+        else
+        {
+             [self MXCacheSize:(sessionIndex + 1) intermediateDiskUsage:intermediateDiskUsage block:block];
         }
     }
-    
-    return cacheSize;
 }
 
 // return the sum of the caches (MX cache + media cache ...) in bytes
