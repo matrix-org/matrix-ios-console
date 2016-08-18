@@ -24,8 +24,8 @@ pod 'MatrixKit', '0.3.13'
 
 pod 'GBDeviceInfo', '~> 4.1.0'
 
-### libjingle call stack ###
-pod 'libjingle_peerconnection'
+# The Google WebRTC stack
+pod 'WebRTC', '1.0.13807'
 
 end
 
