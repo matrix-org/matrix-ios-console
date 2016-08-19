@@ -624,7 +624,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = matrixConsole/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = matrixConsole;
 			};
@@ -639,7 +639,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = matrixConsole/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = matrixConsole;
 			};
