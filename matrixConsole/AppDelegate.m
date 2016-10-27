@@ -548,7 +548,7 @@
             isTrusted = NO;
             dispatch_semaphore_signal(semaphore);
             
-            [[MXKAccountManager sharedManager] removeAccount:mxAccount];
+            [[MXKAccountManager sharedManager] removeAccount:mxAccount completion:nil];
         }];
         
         dispatch_async(dispatch_get_main_queue(), ^{
