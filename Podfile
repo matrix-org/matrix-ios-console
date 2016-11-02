@@ -25,7 +25,7 @@ pod 'MatrixKit', '0.3.13'
 pod 'GBDeviceInfo', '~> 4.1.0'
 
 # The Google WebRTC stack
-pod 'WebRTC', '1.0.13807'
+pod 'WebRTC', '54.6.13869'
 
 end
 
