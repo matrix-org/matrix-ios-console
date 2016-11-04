@@ -1038,7 +1038,7 @@
         
         if (mxSession)
         {
-            MXRoom* mxRoom = [mxSession privateOneToOneRoomWithUserId:userId];
+            MXRoom* mxRoom = [mxSession directJoinedRoomWithUserId:userId];
             
             // if the room exists
             if (mxRoom)
