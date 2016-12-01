@@ -280,7 +280,7 @@
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
     
     // check if some media must be released to reduce the cache size
-    [MXKMediaManager reduceCacheSizeToInsert:0];
+    [MXMediaManager reduceCacheSizeToInsert:0];
     
     // Hide potential notification
     if (self.mxInAppNotification)
@@ -764,7 +764,7 @@
     if (clearCache)
     {
         // clear the media cache
-        [MXKMediaManager clearCache];
+        [MXMediaManager clearCache];
     }
 }
 
@@ -774,7 +774,7 @@
     isAPNSRegistered = NO;
     
     // Clear cache
-    [MXKMediaManager clearCache];
+    [MXMediaManager clearCache];
 
 #ifdef MX_CALL_STACK_ENDPOINT
     // Erase all created certificates and private keys by MXEndpointCallStack
@@ -964,9 +964,7 @@
             currentCallViewController.delegate = self;
             
             UIViewController *selectedViewController = [self.masterTabBarController selectedViewController];
-            [selectedViewController presentViewController:currentCallViewController animated:YES completion:^{
-                currentCallViewController.isPresented = YES;
-            }];
+            [selectedViewController presentViewController:currentCallViewController animated:YES completion:nil];
             
             // Hide system status bar
             [UIApplication sharedApplication].statusBarHidden = YES;
@@ -1165,14 +1163,12 @@
 {
     if (callViewController == currentCallViewController)
     {
-        
-        if (callViewController.isPresented)
+        if (callViewController.presentingViewController)
         {
             BOOL callIsEnded = (callViewController.mxCall.state == MXCallStateEnded);
             NSLog(@"Call view controller is dismissed (%d)", callIsEnded);
             
             [callViewController dismissViewControllerAnimated:YES completion:^{
-                callViewController.isPresented = NO;
                 
                 if (!callIsEnded)
                 {
@@ -1268,9 +1264,7 @@
     [self removeCallStatusBar];
     
     UIViewController *selectedViewController = [self.masterTabBarController selectedViewController];
-    [selectedViewController presentViewController:currentCallViewController animated:YES completion:^{
-        currentCallViewController.isPresented = YES;
-    }];
+    [selectedViewController presentViewController:currentCallViewController animated:YES completion:nil];
 }
 
 - (void)statusBarDidChangeFrame

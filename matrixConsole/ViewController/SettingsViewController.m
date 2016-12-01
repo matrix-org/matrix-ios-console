@@ -859,31 +859,31 @@
 // return the sum of the caches (MX cache + media cache ...) in bytes
 - (NSUInteger)cachesSize
 {
-    return self.MXCacheSize + [MXKMediaManager cacheSize];
+    return self.MXCacheSize + [MXMediaManager cacheSize];
 }
 
 // defines the min allow cache size in bytes
 - (NSUInteger)minCachesSize
 {
     // add a 50MB margin to avoid cache file deletion
-    return self.MXCacheSize + [MXKMediaManager minCacheSize] + 50 * 1024 * 1024;
+    return self.MXCacheSize + [MXMediaManager minCacheSize] + 50 * 1024 * 1024;
 }
 
 // defines the current max caches size in bytes
 - (NSUInteger)currentMaxCachesSize
 {
-    return self.MXCacheSize + [MXKMediaManager currentMaxCacheSize];
+    return self.MXCacheSize + [MXMediaManager currentMaxCacheSize];
 }
 
 - (void)setCurrentMaxCachesSize:(NSUInteger)maxCachesSize
 {
-    [MXKMediaManager setCurrentMaxCacheSize:maxCachesSize - self.MXCacheSize];
+    [MXMediaManager setCurrentMaxCacheSize:maxCachesSize - self.MXCacheSize];
 }
 
 // defines the max allowed caches size in bytes
 - (NSUInteger) maxAllowedCachesSize
 {
-    return self.MXCacheSize + [MXKMediaManager maxAllowedCacheSize];
+    return self.MXCacheSize + [MXMediaManager maxAllowedCacheSize];
 }
 
 @end
