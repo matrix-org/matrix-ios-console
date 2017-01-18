@@ -137,6 +137,12 @@
         membersListener = nil;
     }
     
+    if (dataSource)
+    {
+        // Show the keyboard icon in the cells of the current writers
+        dataSource.showTypingNotifications = YES;
+    }
+    
     [super displayRoom:dataSource];
 }
 

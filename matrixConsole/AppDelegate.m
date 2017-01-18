@@ -22,7 +22,7 @@
 
 #import "NSBundle+MatrixKit.h"
 
-#import "NSData+MatrixKit.h"
+#import "MatrixSDK/MatrixSDK.h"
 
 #import "AFNetworkReachabilityManager.h"
 
@@ -526,7 +526,7 @@
         NSString *existing_expl = mxCredentials.allowedCertificate ? [NSBundle mxk_localizedStringForKey:@"ssl_expected_existing_expl"] : [NSBundle mxk_localizedStringForKey:@"ssl_unexpected_existing_expl"];
         NSString *homeserverURLStr = [NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"ssl_homeserver_url"], mxCredentials.homeServer];
         NSString *fingerprint = [NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"ssl_fingerprint_hash"], @"SHA256"];
-        NSString *certFingerprint = [certificate SHA256AsHexString];
+        NSString *certFingerprint = [certificate mx_SHA256AsHexString];
         
         NSString *msg = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@", [NSBundle mxk_localizedStringForKey:@"ssl_cert_not_trust"], existing_expl, homeserverURLStr, fingerprint, certFingerprint, [NSBundle mxk_localizedStringForKey:@"ssl_only_accept"]];
         
