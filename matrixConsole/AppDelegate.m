@@ -231,9 +231,6 @@
         [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // Configure local contacts management
-        [MXKContactManager sharedManager].enableFullMatrixIdSyncOnLocalContactsDidLoad = NO;
-        
         // Add matrix observers, and initialize matrix sessions if the app is not launched in background.
         [self initMatrixSessions];
     }
@@ -357,7 +354,7 @@
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
         // Refresh the local contacts list by reloading it
-        [[MXKContactManager sharedManager] loadLocalContacts];
+        [[MXKContactManager sharedManager] refreshLocalContacts];
     }
     
     _isAppForeground = YES;
