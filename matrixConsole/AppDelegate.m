@@ -21,6 +21,7 @@
 #import "RageShakeManager.h"
 
 #import "NSBundle+MatrixKit.h"
+#import "NSData+MatrixKit.h"
 
 #import "MatrixSDK/MatrixSDK.h"
 
@@ -277,7 +278,7 @@
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
     
     // check if some media must be released to reduce the cache size
-    [MXMediaManager reduceCacheSizeToInsert:0];
+    [MXKMediaManager reduceCacheSizeToInsert:0];
     
     // Hide potential notification
     if (self.mxInAppNotification)
@@ -354,7 +355,7 @@
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
         // Refresh the local contacts list by reloading it
-        [[MXKContactManager sharedManager] refreshLocalContacts];
+        [[MXKContactManager sharedManager] loadLocalContacts];
     }
     
     _isAppForeground = YES;
@@ -375,13 +376,13 @@
         if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
         {
             // Registration on iOS 8 and later
-            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                                 |UIRemoteNotificationTypeSound
-                                                                                                 |UIRemoteNotificationTypeAlert) categories:nil];
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge
+                                                                                                 |UIUserNotificationTypeSound
+                                                                                                 |UIUserNotificationTypeAlert) categories:nil];
             [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
         } else
         {
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIUserNotificationType)(UIUserNotificationTypeAlert | UIUserNotificationTypeSound | UIUserNotificationTypeBadge)];
         }
     }
 }
@@ -523,7 +524,7 @@
         NSString *existing_expl = mxCredentials.allowedCertificate ? [NSBundle mxk_localizedStringForKey:@"ssl_expected_existing_expl"] : [NSBundle mxk_localizedStringForKey:@"ssl_unexpected_existing_expl"];
         NSString *homeserverURLStr = [NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"ssl_homeserver_url"], mxCredentials.homeServer];
         NSString *fingerprint = [NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"ssl_fingerprint_hash"], @"SHA256"];
-        NSString *certFingerprint = [certificate mx_SHA256AsHexString];
+        NSString *certFingerprint = [certificate SHA256AsHexString];
         
         NSString *msg = [NSString stringWithFormat:@"%@\n\n%@\n\n%@\n\n%@\n\n%@\n\n%@", [NSBundle mxk_localizedStringForKey:@"ssl_cert_not_trust"], existing_expl, homeserverURLStr, fingerprint, certFingerprint, [NSBundle mxk_localizedStringForKey:@"ssl_only_accept"]];
         
@@ -545,7 +546,7 @@
             isTrusted = NO;
             dispatch_semaphore_signal(semaphore);
             
-            [[MXKAccountManager sharedManager] removeAccount:mxAccount completion:nil];
+            [[MXKAccountManager sharedManager] removeAccount:mxAccount];
         }];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -684,14 +685,14 @@
         
     }];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:kMXSessionDidCorruptDataNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull notif) {
-        
-        NSLog(@"[AppDelegate] kMXSessionDidCorruptDataNotification received. Reload the app");
-        
-        // Reload entirely the app when a session has corrupted its data
-        [[AppDelegate theDelegate] reloadMatrixSessions:YES];
-        
-    }];
+//    [[NSNotificationCenter defaultCenter] addObserverForName:kMXSessionDidCorruptDataNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull notif) {
+//
+//        NSLog(@"[AppDelegate] kMXSessionDidCorruptDataNotification received. Reload the app");
+//
+//        // Reload entirely the app when a session has corrupted its data
+//        [[AppDelegate theDelegate] reloadMatrixSessions:YES];
+//
+//    }];
     
     // Observe settings changes
     [[MXKAppSettings standardAppSettings]  addObserver:self forKeyPath:@"showAllEventsInRoomHistory" options:0 context:nil];
@@ -761,7 +762,7 @@
     if (clearCache)
     {
         // clear the media cache
-        [MXMediaManager clearCache];
+        [MXKMediaManager clearCache];
     }
 }
 
@@ -771,7 +772,7 @@
     isAPNSRegistered = NO;
     
     // Clear cache
-    [MXMediaManager clearCache];
+    [MXKMediaManager clearCache];
 
 #ifdef MX_CALL_STACK_ENDPOINT
     // Erase all created certificates and private keys by MXEndpointCallStack
@@ -1033,7 +1034,7 @@
         
         if (mxSession)
         {
-            MXRoom* mxRoom = [mxSession directJoinedRoomWithUserId:userId];
+            MXRoom* mxRoom = [mxSession privateOneToOneRoomWithUserId:userId];
             
             // if the room exists
             if (mxRoom)
