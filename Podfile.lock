@@ -30,7 +30,6 @@ PODS:
   - GBDeviceInfo/Core (4.1.0)
   - GHMarkdownParser (0.1.2)
   - HPGrowingTextView (1.1)
-  - libjingle_peerconnection (11177.2.0)
   - libPhoneNumber-iOS (0.8.15)
   - MatrixKit (0.3.13):
     - DTCoreText (~> 1.6.17)
@@ -40,24 +39,38 @@ PODS:
     - MatrixSDK (= 0.6.12)
   - MatrixSDK (0.6.12):
     - AFNetworking (~> 3.1.0)
+  - WebRTC (54.6.13869)
 
 DEPENDENCIES:
   - GBDeviceInfo (~> 4.1.0)
-  - libjingle_peerconnection
   - MatrixKit (= 0.3.13)
+  - WebRTC (= 54.6.13869)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - DTCoreText
+    - DTFoundation
+    - GBDeviceInfo
+    - GHMarkdownParser
+    - HPGrowingTextView
+    - libPhoneNumber-iOS
+    - MatrixKit
+    - MatrixSDK
+    - WebRTC
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AFNetworking: 19827bce8c8d25b16bea185837cb66976c23f8fe
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
   GBDeviceInfo: e50df975a95e21faec93e2bf98376846fe17d307
   GHMarkdownParser: 14cbf59d0ab9450017d843dffd4a3ef691e5bd77
   HPGrowingTextView: 88a716d97fb853bcb08a4a08e4727da17efc9b19
-  libjingle_peerconnection: 3458f646ddd61f08a9f3a0c43fb01fff5c165eb8
   libPhoneNumber-iOS: 62a740e1ea5741060f5cec0f788b52071115cf31
   MatrixKit: 4ed4963069510e2be2349d3310602a03b9d3a043
   MatrixSDK: 15f165271e3c677060be1f131edef9e643067677
+  WebRTC: 9f23349248fd2e94a14cb4552bae6e591bb2fe28
 
-PODFILE CHECKSUM: b6af1506b3dc4f333ab208e672b05f8c06784bd8
+PODFILE CHECKSUM: 780c21810a0d953c67e244b64ebe5d7889bdc066
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.11.3

@@ -843,11 +843,7 @@
         if (mxSession.store && [mxSession.store isKindOfClass:[MXFileStore class]])
         {
             MXFileStore *fileStore = (MXFileStore*)mxSession.store;
-
-            [fileStore diskUsageWithBlock:^(NSUInteger diskUsage) {
-
-                [self MXCacheSize:(sessionIndex + 1) intermediateDiskUsage:(intermediateDiskUsage + diskUsage) block:block];
-            }];
+            [self MXCacheSize:(sessionIndex + 1) intermediateDiskUsage:(intermediateDiskUsage + fileStore.diskUsage) block:block];
         }
         else
         {
@@ -859,31 +855,31 @@
 // return the sum of the caches (MX cache + media cache ...) in bytes
 - (NSUInteger)cachesSize
 {
-    return self.MXCacheSize + [MXMediaManager cacheSize];
+    return self.MXCacheSize + [MXKMediaManager cacheSize];
 }
 
 // defines the min allow cache size in bytes
 - (NSUInteger)minCachesSize
 {
     // add a 50MB margin to avoid cache file deletion
-    return self.MXCacheSize + [MXMediaManager minCacheSize] + 50 * 1024 * 1024;
+    return self.MXCacheSize + [MXKMediaManager minCacheSize] + 50 * 1024 * 1024;
 }
 
 // defines the current max caches size in bytes
 - (NSUInteger)currentMaxCachesSize
 {
-    return self.MXCacheSize + [MXMediaManager currentMaxCacheSize];
+    return self.MXCacheSize + [MXKMediaManager currentMaxCacheSize];
 }
 
 - (void)setCurrentMaxCachesSize:(NSUInteger)maxCachesSize
 {
-    [MXMediaManager setCurrentMaxCacheSize:maxCachesSize - self.MXCacheSize];
+    [MXKMediaManager setCurrentMaxCacheSize:maxCachesSize - self.MXCacheSize];
 }
 
 // defines the max allowed caches size in bytes
 - (NSUInteger) maxAllowedCachesSize
 {
-    return self.MXCacheSize + [MXMediaManager maxAllowedCacheSize];
+    return self.MXCacheSize + [MXKMediaManager maxAllowedCacheSize];
 }
 
 @end
